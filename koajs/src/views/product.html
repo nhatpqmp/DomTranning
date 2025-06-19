@@ -1,9 +1,5 @@
-
-
-<!--<ul>-->
-<!--    <li>ID: <%= product.id %></li>-->
-<!--    <li>Name: <%= product.name %></li>-->
-<!--    <li>Price: <%= product.price %></li>-->
-<!--    <li>Description: <%= product.description %></li>-->
-<!--</ul>-->
-<h1>Dom</h1>
+<ul>
+    <% products.forEach(function (product) {%>
+    <li><%= product.name %></li>
+    <% })%>
+</ul>
