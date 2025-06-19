@@ -5,13 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8fa898d0-4e54-4f15-9a53-e494f8243ccc" name="Changes" comment="- Todo app">
+      <change afterPath="$PROJECT_DIR$/reactjs/first-react-app/src/components/Actions/Add.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reactjs/first-react-app/src/components/Actions/Complete.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reactjs/first-react-app/src/components/Actions/Delete.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/todo-app/src/components/Actions/Add.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/todo-app/src/components/Actions/BulkComplete.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/todo-app/src/components/Actions/BulkDelete.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/todo-app/src/components/Actions/BulkIncomplete.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/todo-app/src/components/Actions/Complete.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/todo-app/src/components/Actions/Delete.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/todo-app/src/hooks/useFetchApi.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/koajs/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/koajs/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/koajs/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/koajs/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/koajs/src/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/koajs/src/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/koajs/src/database/products.json" beforeDir="false" afterPath="$PROJECT_DIR$/koajs/src/database/products.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/koajs/src/routes/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/koajs/src/routes/routes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/koajs/src/views/product.html" beforeDir="false" afterPath="$PROJECT_DIR$/koajs/src/views/product.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reactjs/first-react-app/src/components/App/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/reactjs/first-react-app/src/components/App/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reactjs/first-react-app/src/hooks/useFetchApi.js" beforeDir="false" afterPath="$PROJECT_DIR$/reactjs/first-react-app/src/hooks/useFetchApi.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo-app/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/todo-app/src/components/App/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo-app/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/todo-app/src/components/App/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo-app/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/todo-app/src/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,30 +56,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Node.js.hello.js.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/www/training-code-sample/koajs/src/middleware&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\WebStorm 2025.1.2\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Node.js.hello.js.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/www/training-code-sample/todo-app/src/components/Actions",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.keymap",
+    "ts.external.directory.path": "C:\\WebStorm 2025.1.2\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\www\training-code-sample\todo-app\src\components\Actions" />
+      <recent name="C:\www\training-code-sample\todo-app\src" />
+      <recent name="C:\www\training-code-sample\reactjs\first-react-app\src" />
       <recent name="C:\www\training-code-sample\koajs\src\middleware" />
       <recent name="C:\www\training-code-sample\koajs\src\database" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\www\training-code-sample\todo-app\src\components\App" />
       <recent name="C:\www\training-code-sample\koajs\src" />
     </key>
   </component>
@@ -104,7 +118,7 @@
       <workItem from="1749751777631" duration="110000" />
       <workItem from="1749792038618" duration="5788000" />
       <workItem from="1750262539760" duration="6843000" />
-      <workItem from="1750344658527" duration="325000" />
+      <workItem from="1750344658527" duration="8564000" />
     </task>
     <task id="LOCAL-00001" summary="- Todo app">
       <option name="closed" value="true" />
@@ -119,6 +133,17 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="- Todo app" />
