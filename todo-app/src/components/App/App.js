@@ -3,21 +3,16 @@ import {
     AppProvider,
     Page,
     Card,
-    Button,
-    Badge,
-    Text,
-    ResourceList,
-    Checkbox,
-    Modal,
-    TextField,
+    Text
 } from '@shopify/polaris';
 import '@shopify/polaris/build/esm/styles.css';
 import useFetchApi from "../../hooks/useFetchApi";
-import Delete from "../Actions/Delete";
-import Complete from "../Actions/Complete";
 import BulkDelete from "../Actions/BulkDelete";
 import BulkComplete from "../Actions/BulkComplete";
 import BulkIncomplete from "../Actions/BulkIncomplete";
+import Todos from "../Todos/Todos";
+import Add from "../Actions/Add";
+import TopBarExample from "../TopBarExample/TopBarExample";
 
 function App() {
     const { data: todos, setData: setTodos, loading, fetched } = useFetchApi({
@@ -27,7 +22,6 @@ function App() {
 
     const [selected, setSelected] = useState([]);
     const [activeModal, setActiveModal] = useState(false);
-    const [newTitle, setNewTitle] = useState('');
 
     const handleSelect = (id, checked) => {
         setSelected(prev =>
@@ -36,6 +30,7 @@ function App() {
     };
 
     const handleBulkAction = (action) => {
+        console.log(selected);
         if (action === 'delete') {
             setTodos(prev => prev.filter(todo => !selected.includes(todo.id)));
         } else {
@@ -43,7 +38,7 @@ function App() {
             setTodos(prev =>
                 prev.map(todo =>
                     selected.includes(todo.id)
-                        ? { ...todo, completed: false }
+                        ? { ...todo, completed: completedValue }
                         : todo
                 )
             );
@@ -51,8 +46,7 @@ function App() {
         setSelected([]);
     };
 
-    const handleAddTodo = () => {
-        const title = newTitle.trim();
+    const handleAddTodo = (title) => {
         if (title) {
             const newTodo = {
                 id: todos.length + 1,
@@ -60,44 +54,25 @@ function App() {
                 completed: false,
             };
             setTodos(prev => [newTodo, ...prev]);
-            setNewTitle('');
             setActiveModal(false);
         }
     };
 
+    const handlerModalChange = () => {
+        setActiveModal(prev => !prev);
+    }
+
     return (
         <AppProvider i18n={{}}>
+            <TopBarExample/>
             <Page
                 title="Todoes"
                 primaryAction={{
                     content: 'Create',
-                    onAction: () => setActiveModal(true),
+                    onAction: handlerModalChange,
                 }}
             >
-                <Modal
-                    open={activeModal}
-                    onClose={() => setActiveModal(false)}
-                    title="Create todo"
-                    primaryAction={{
-                        content: 'Add',
-                        onAction: handleAddTodo,
-                    }}
-                    secondaryActions={[
-                        {
-                            content: 'Cancel',
-                            onAction: () => setActiveModal(false),
-                        },
-                    ]}
-                >
-                    <Modal.Section>
-                        <TextField
-                            label="Title"
-                            value={newTitle}
-                            onChange={setNewTitle}
-                            autoComplete="off"
-                        />
-                    </Modal.Section>
-                </Modal>
+                <Add activeModal={activeModal} handlerModalChange={handlerModalChange} handleAddTodo={handleAddTodo}/>
 
                 {selected.length > 0 && (
                     <Card sectioned>
@@ -109,61 +84,11 @@ function App() {
                     {loading ? (
                         <div style={{ padding: '1rem' }}>Loading...</div>
                     ) : (
-                        <ResourceList
-                            resourceName={{ singular: 'todo', plural: 'todoes' }}
-                            items={todos}
-                            renderItem={(todo) => {
-                                const { id, title, completed } = todo;
-                                const checked = selected.includes(id);
-
-                                return (
-                                    <ResourceList.Item id={id}>
-                                        <div
-                                            style={{
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'space-between',
-                                                flexWrap: 'wrap',
-                                                gap: '1rem',
-                                            }}
-                                        >
-                                            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                                                <Checkbox
-                                                    checked={checked}
-                                                    onChange={(val) => handleSelect(id, val)}
-                                                />
-                                                <Text
-                                                    variant="bodyMd"
-                                                    fontWeight="semibold"
-                                                    style={{ textDecoration: completed ? 'line-through' : 'none' }}
-                                                >
-                                                    {title}
-                                                </Text>
-                                            </div>
-                                            <div style={{ display: 'flex', gap: '0.5rem' }}>
-                                                <Badge tone={completed ? 'success' : 'warning'}>
-                                                    {completed ? 'Complete' : 'Incomplete'}
-                                                </Badge>
-                                                <Complete
-                                                    onClick={() =>
-                                                        setTodos(prev =>
-                                                            prev.map(t =>
-                                                                t.id === id ? { ...t, completed: true } : t
-                                                            )
-                                                        )
-                                                    }
-                                                    completed={completed}
-                                                />
-                                                <Delete
-                                                    onClick={() =>
-                                                        setTodos(prev => prev.filter(t => t.id !== id))
-                                                    }
-                                                />
-                                            </div>
-                                        </div>
-                                    </ResourceList.Item>
-                                );
-                            }}
+                        <Todos
+                            todos={todos}
+                            selected={selected}
+                            handleSelect={handleSelect}
+                            setTodos={setTodos}
                         />
                     )}
                 </Card>

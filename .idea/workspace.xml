@@ -4,50 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8fa898d0-4e54-4f15-9a53-e494f8243ccc" name="Changes" comment="- Todo app">
-      <change afterPath="$PROJECT_DIR$/reactjs/first-react-app/src/components/Actions/Add.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reactjs/first-react-app/src/components/Actions/Complete.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reactjs/first-react-app/src/components/Actions/Delete.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/todo-app/src/components/Actions/Add.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/todo-app/src/components/Actions/BulkComplete.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/todo-app/src/components/Actions/BulkDelete.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/todo-app/src/components/Actions/BulkIncomplete.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/todo-app/src/components/Actions/Complete.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/todo-app/src/components/Actions/Delete.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/todo-app/src/hooks/useFetchApi.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reactjs/first-react-app/src/components/App/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/reactjs/first-react-app/src/components/App/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reactjs/first-react-app/src/hooks/useFetchApi.js" beforeDir="false" afterPath="$PROJECT_DIR$/reactjs/first-react-app/src/hooks/useFetchApi.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/todo-app/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/todo-app/src/components/App/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/todo-app/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/todo-app/src/components/App/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/todo-app/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/todo-app/src/index.js" afterDir="false" />
+    <list default="true" id="8fa898d0-4e54-4f15-9a53-e494f8243ccc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ChangesViewManager">
-    <option name="groupingKeys">
-      <option value="directory" />
-      <option value="repository" />
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;nhatpqmp&quot;
-  }
-}</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/nhatpqmp/DomTranning.git&quot;,
-    &quot;accountId&quot;: &quot;c27255ce-290a-45b2-af37-446c19716c99&quot;
-  }
-}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
 }</component>
@@ -62,30 +29,21 @@
     "Node.js.hello.js.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/www/training-code-sample/todo-app/src/components/Actions",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/www/training-code-sample/koajs/src/middleware",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.keymap",
     "ts.external.directory.path": "C:\\WebStorm 2025.1.2\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\www\training-code-sample\todo-app\src\components\Actions" />
-      <recent name="C:\www\training-code-sample\todo-app\src" />
-      <recent name="C:\www\training-code-sample\reactjs\first-react-app\src" />
       <recent name="C:\www\training-code-sample\koajs\src\middleware" />
       <recent name="C:\www\training-code-sample\koajs\src\database" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\www\training-code-sample\todo-app\src\components\App" />
-      <recent name="C:\www\training-code-sample\koajs\src" />
     </key>
   </component>
   <component name="RunManager">
@@ -116,37 +74,10 @@
       <workItem from="1749654921999" duration="4558000" />
       <workItem from="1749739584878" duration="9820000" />
       <workItem from="1749751777631" duration="110000" />
-      <workItem from="1749792038618" duration="5788000" />
-      <workItem from="1750262539760" duration="6843000" />
-      <workItem from="1750344658527" duration="8564000" />
     </task>
-    <task id="LOCAL-00001" summary="- Todo app">
-      <option name="closed" value="true" />
-      <created>1750270098303</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1750270098303</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="- Todo app" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Todo app" />
   </component>
 </project>

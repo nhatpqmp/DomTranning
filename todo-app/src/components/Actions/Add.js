@@ -1,34 +1,45 @@
 import React, { useState } from 'react';
+import {Modal, TextField} from '@shopify/polaris';
 
-function Add({ onAdd }) {
-    const [value, setValue] = useState('');
+function Add({ activeModal, handlerModalChange, handleAddTodo }) {
+    const [title, setTitle] = useState('');
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const trimmed = value.trim();
-        if (trimmed) {
-            onAdd(trimmed);
-            setValue('');
-        }
+    const addTodo = () => {
+        handleAddTodo(title);
+        setTitle('');
     };
 
+    const handlerSetTitle =  (newTitle) => {
+        setTitle(newTitle);
+    }
+
     return (
-        <form onSubmit={handleSubmit} style={{ marginBottom: '16px' }}>
-            <input
-                type="text"
-                value={value}
-                onChange={(e) => setValue(e.target.value)}
-                placeholder="Enter new todo"
-                style={{
-                    margin: '30px 40px',
+        <>
+            <Modal
+                open={activeModal}
+                onClose={() => handlerModalChange}
+                title="Create todo"
+                primaryAction={{
+                    content: 'Add',
+                    onAction: addTodo,
                 }}
-            />
-            <button
-                type="submit"
+                secondaryActions={[
+                    {
+                        content: 'Cancel',
+                        onAction: () => handlerModalChange,
+                    },
+                ]}
             >
-                Add
-            </button>
-        </form>
+                <Modal.Section>
+                    <TextField
+                        label="Title"
+                        value={title}
+                        onChange={handlerSetTitle}
+                        autoComplete="off"
+                    />
+                </Modal.Section>
+            </Modal>
+        </>
     );
 }
 

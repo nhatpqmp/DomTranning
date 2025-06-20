@@ -1,10 +1,10 @@
 import React from 'react';
 import {Button} from "@shopify/polaris";
 
-const BulkIncomplete = ({ onclick }) => {
+const BulkIncomplete = ({ onClick }) => {
     return (
         <Button
-            onClick={onclick}
+            onClick={onClick}
         >
             Incomplete
         </Button>
