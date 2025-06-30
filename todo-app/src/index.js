@@ -1,7 +1,7 @@
 // src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
+import App from './components/App/App';
 import '@shopify/polaris/build/esm/styles.css'; // Thêm dòng này
 import { AppProvider } from '@shopify/polaris';
 

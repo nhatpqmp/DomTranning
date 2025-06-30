@@ -4,17 +4,34 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8fa898d0-4e54-4f15-9a53-e494f8243ccc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-    </list>
+    <list default="true" id="8fa898d0-4e54-4f15-9a53-e494f8243ccc" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;nhatpqmp&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/nhatpqmp/DomTranning.git&quot;,
+    &quot;accountId&quot;: &quot;c27255ce-290a-45b2-af37-446c19716c99&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
 }</component>
@@ -23,35 +40,72 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Node.js.hello.js.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/www/training-code-sample/koajs/src/middleware",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "C:\\WebStorm 2025.1.2\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Node.js.addData.js.executor&quot;: &quot;Run&quot;,
+    &quot;Node.js.hello.js.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/www/training-code-sample/todo-app-koa-function/functions/src/handlers&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.serve (1).executor&quot;: &quot;Run&quot;,
+    &quot;npm.serve.executor&quot;: &quot;Run&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\WebStorm 2025.1.2\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\www\training-code-sample\koajs\src\middleware" />
-      <recent name="C:\www\training-code-sample\koajs\src\database" />
+      <recent name="C:\www\training-code-sample\todo-app-koa-function\functions\src\handlers" />
+      <recent name="C:\www\training-code-sample\todo-app-koa-function\src" />
+      <recent name="C:\www\training-code-sample\todo-app-koa-function\functions" />
+      <recent name="C:\www\training-code-sample\todo-app-koa-function" />
+      <recent name="C:\www\training-code-sample\koa-functions\functions\src" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\www\training-code-sample\todo-app-koa-function\functions\src" />
+      <recent name="C:\www\training-code-sample\koa-functions\functions\src" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="npm.serve (1)">
+    <configuration name="addData.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/todo-app-koa-function/functions/src/addData.js" working-dir="$PROJECT_DIR$/todo-app-koa-function/functions/src">
+      <method v="2" />
+    </configuration>
     <configuration name="hello.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/nodejs/basic/hello.js" working-dir="$PROJECT_DIR$/nodejs/basic">
+      <method v="2" />
+    </configuration>
+    <configuration name="serve (1)" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/todo-app-koa-function/functions/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="serve" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="serve" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/koa-functions/functions/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="serve" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.serve (1)" />
+        <item itemvalue="Node.js.addData.js" />
+        <item itemvalue="npm.serve" />
         <item itemvalue="Node.js.hello.js" />
       </list>
     </recent_temporary>
@@ -74,10 +128,25 @@
       <workItem from="1749654921999" duration="4558000" />
       <workItem from="1749739584878" duration="9820000" />
       <workItem from="1749751777631" duration="110000" />
+      <workItem from="1750867690735" duration="7437000" />
+      <workItem from="1751177226779" duration="26812000" />
+      <workItem from="1751218928114" duration="2936000" />
+      <workItem from="1751250226575" duration="5779000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
