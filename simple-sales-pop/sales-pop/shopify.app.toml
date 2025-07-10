@@ -1,0 +1,30 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "9918f83fe0292772a1540b79cf546bab"
+name = "Sales Pop App"
+handle = "sales-pop-app"
+application_url = "https://synthesis-im-store-qualifying.trycloudflare.com/auth/shopify"
+embedded = true
+
+[webhooks]
+api_version = "2025-07"
+
+[auth]
+redirect_urls = [
+  "https://synthesis-im-store-qualifying.trycloudflare.com/auth/shopify/callback",
+  "https://synthesis-im-store-qualifying.trycloudflare.com/authSa/shopify/callback",
+  "https://synthesis-im-store-qualifying.trycloudflare.com/auth/shopify/embed/callback",
+  "https://synthesis-im-store-qualifying.trycloudflare.com/auth/shopify/embed/callback/updateScopes",
+  "https://localhost:3000/auth/shopify/callback",
+  "https://localhost:3000/authSa/shopify/callback",
+  "https://localhost:3000/auth/shopify/embed/callback"
+]
+
+[pos]
+embedded = false
+
+[build]
+automatically_update_urls_on_dev = true
+
+[shopify]
+api_key = "9918f83fe0292772a1540b79cf546bab"
