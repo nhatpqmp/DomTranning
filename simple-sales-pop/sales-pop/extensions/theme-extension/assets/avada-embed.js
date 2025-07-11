@@ -1,5 +1,5 @@
 (function() {
-  const BASE_URL = 'https://synthesis-im-store-qualifying.trycloudflare.com/scripttag';
+  const BASE_URL = 'https://operates-could-specialist-mixture.trycloudflare.com/scripttag';
 
   const scriptElement = document.createElement('script');
   scriptElement.type = 'text/javascript';

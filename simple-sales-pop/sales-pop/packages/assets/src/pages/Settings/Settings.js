@@ -16,7 +16,9 @@ import {
 import {XSmallIcon} from '@shopify/polaris-icons';
 
 import Display from '@assets/components/Setting/Display';
-import Triggers from "@assets/components/Setting/Triggers";
+import Triggers from '@assets/components/Setting/Triggers';
+import useFetchApi from '@assets/hooks/api/useFetchApi';
+import Loading from '@assets/components/Loading';
 
 /**
  * @return {JSX.Element}
@@ -32,6 +34,11 @@ export default function Settings() {
     source: 'AVADA',
     date: 'March 8, 2021'
   };
+  const {data: setting, fetchApi, loading} = useFetchApi({
+    url: '/settings',
+    defaultData: []
+  });
+  console.log(setting);
   const [selected, setSelected] = useState(0);
 
   const handleTabChange = useCallback(selectedTabIndex => setSelected(selectedTabIndex), []);
@@ -56,6 +63,7 @@ export default function Settings() {
     <Page
       title="Settings"
       primaryAction={{
+        loading: loading,
         content: 'Save',
         tone: 'success',
         onAction: () => {
@@ -63,56 +71,62 @@ export default function Settings() {
         }
       }}
     >
-      <Layout>
-        <Layout.Section variant="oneThird">
-          <Card>
-            <InlineStack wrap={false} gap="200" align="start">
-              <Thumbnail source={item.image} alt={item.title} size="medium" />
+      {loading ? (
+        <Card>
+          <Loading />
+        </Card>
+      ) : (
+        <Layout>
+          <Layout.Section variant="oneThird">
+            <Card>
+              <InlineStack wrap={false} gap="200" align="start">
+                <Thumbnail source={item.image} alt={item.title} size="medium" />
 
-              <InlineGrid>
-                <Box maxWidth="180px">
-                  <BlockStack gap="100">
-                    <Text variant="bodySm" tone="subdued" truncate>
-                      Someone in {item.location}
-                    </Text>
-
-                    <Text as="h3" variant="bodyMd" fontWeight="bold">
-                      {item.title}
-                    </Text>
-
-                    <InlineStack gap="200" align="space-between">
-                      <Text tone="subdued" variant="bodySm">
-                        {item.timeAgo}
+                <InlineGrid>
+                  <Box maxWidth="180px">
+                    <BlockStack gap="100">
+                      <Text variant="bodySm" tone="subdued" truncate>
+                        Someone in {item.location}
                       </Text>
-                      <Text tone="subdued" variant="bodySm">
-                        ✓ by {item.source}
+
+                      <Text as="h3" variant="bodyMd" fontWeight="bold">
+                        {item.title}
                       </Text>
-                    </InlineStack>
-                  </BlockStack>
+
+                      <InlineStack gap="200" align="space-between">
+                        <Text tone="subdued" variant="bodySm">
+                          {item.timeAgo}
+                        </Text>
+                        <Text tone="subdued" variant="bodySm">
+                          ✓ by {item.source}
+                        </Text>
+                      </InlineStack>
+                    </BlockStack>
+                  </Box>
+                </InlineGrid>
+
+                <Box paddingBlockStart="0">
+                  <Button
+                    variant="plain"
+                    icon={XSmallIcon}
+                    onClick={() => console.log('Dismiss notification')}
+                    accessibilityLabel="Dismiss"
+                  />
                 </Box>
-              </InlineGrid>
-
-              <Box paddingBlockStart="0">
-                <Button
-                  variant="plain"
-                  icon={XSmallIcon}
-                  onClick={() => console.log('Dismiss notification')}
-                  accessibilityLabel="Dismiss"
-                />
-              </Box>
-            </InlineStack>
-          </Card>
-        </Layout.Section>
-        <Layout.Section>
-          <LegacyCard>
-            <LegacyTabs tabs={tabs} selected={selected} onSelect={handleTabChange}>
-              <LegacyCard.Section title={tabs[selected].title}>
-                {tabs[selected].body}
-              </LegacyCard.Section>
-            </LegacyTabs>
-          </LegacyCard>
-        </Layout.Section>
-      </Layout>
+              </InlineStack>
+            </Card>
+          </Layout.Section>
+          <Layout.Section>
+            <LegacyCard>
+              <LegacyTabs tabs={tabs} selected={selected} onSelect={handleTabChange}>
+                <LegacyCard.Section title={tabs[selected].title}>
+                  {tabs[selected].body}
+                </LegacyCard.Section>
+              </LegacyTabs>
+            </LegacyCard>
+          </Layout.Section>
+        </Layout>
+      )}
     </Page>
   );
 }

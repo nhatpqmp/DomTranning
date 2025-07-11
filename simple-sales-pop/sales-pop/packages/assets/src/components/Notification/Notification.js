@@ -12,33 +12,31 @@ import {
 import {XSmallIcon} from '@shopify/polaris-icons';
 import React from 'react';
 
-export default function Notification(item) {
-  const {id, image, location, title, timeAgo, source, date} = item;
-
+export default function Notification({item}) {
   return (
-    <ResourceItem id={id}>
+    <ResourceItem>
       <InlineStack wrap={false} align="space-between">
         <Card>
           <InlineStack wrap={false} gap="400">
             <InlineStack wrap={false} gap="400" align="center">
-              <Thumbnail source={image} alt={title} size="medium" />
+              <Thumbnail source={item.productImage} alt={item.productName} size="medium" />
               <InlineGrid alignItems="">
                 <Box maxWidth="200px">
                   <BlockStack gap="">
                     <Text variant="bodySm" tone="subdued" truncate>
-                      Someone in {location}
+                      {item.city}
                     </Text>
 
                     <Text as="h3" variant="bodyMd" fontWeight="bold">
-                      {title}
+                      {item.productName}
                     </Text>
 
                     <InlineStack gap="200" align="space-between">
                       <Text tone="subdued" variant="bodySm">
-                        {timeAgo}
+                        {item.dayAgo}
                       </Text>
                       <Text tone="subdued" variant="bodySm">
-                        ✓ by {source}
+                        ✓ by Avada
                       </Text>
                     </InlineStack>
                   </BlockStack>
@@ -54,7 +52,7 @@ export default function Notification(item) {
           </InlineStack>
         </Card>
         <Text variant="bodySm" tone="subdued">
-          {date}
+          {item.date}
         </Text>
       </InlineStack>
     </ResourceItem>
