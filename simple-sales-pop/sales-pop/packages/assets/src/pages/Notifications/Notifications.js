@@ -1,8 +1,7 @@
 import React, {useState, useCallback} from 'react';
-import {Page, Layout, ResourceList, Card, Spinner, Text} from '@shopify/polaris';
+import {Page, Layout, ResourceList, Card} from '@shopify/polaris';
 import Notification from '@assets/components/Notification/Notification';
 import useFetchApi from '@assets/hooks/api/useFetchApi';
-import Loading from "@assets/components/Loading";
 
 export default function Notifications() {
   const [selectedItems, setSelectedItems] = useState([]);

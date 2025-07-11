@@ -19,6 +19,7 @@ import Display from '@assets/components/Setting/Display';
 import Triggers from '@assets/components/Setting/Triggers';
 import useFetchApi from '@assets/hooks/api/useFetchApi';
 import Loading from '@assets/components/Loading';
+import DefaultSetting from '@assets/pages/Settings/defaultSetting';
 
 /**
  * @return {JSX.Element}
@@ -36,7 +37,7 @@ export default function Settings() {
   };
   const {data: setting, setData: setSetting, loading} = useFetchApi({
     url: '/settings',
-    defaultData: []
+    defaultData: DefaultSetting
   });
 
   const handleSettingChange = (key, value) => {
