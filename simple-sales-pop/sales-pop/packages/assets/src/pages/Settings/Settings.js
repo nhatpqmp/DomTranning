@@ -34,11 +34,18 @@ export default function Settings() {
     source: 'AVADA',
     date: 'March 8, 2021'
   };
-  const {data: setting, fetchApi, loading} = useFetchApi({
+  const {data: setting, setData: setSetting, loading} = useFetchApi({
     url: '/settings',
     defaultData: []
   });
-  console.log(setting);
+
+  const handleSettingChange = (key, value) => {
+    setSetting(prevInput => ({
+      ...prevInput,
+      [key]: value
+    }));
+  };
+
   const [selected, setSelected] = useState(0);
 
   const handleTabChange = useCallback(selectedTabIndex => setSelected(selectedTabIndex), []);
@@ -49,7 +56,12 @@ export default function Settings() {
       content: 'Display',
       title: 'APPEARANCE',
       panelID: 'setting-display-content',
-      body: <Display />
+      body: (
+        <Display
+          setting={setting}
+          onChangeSetting={(key, value) => handleSettingChange(key, value)}
+        />
+      )
     },
     {
       id: 'setting-triggers',
