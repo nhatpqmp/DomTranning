@@ -91,7 +91,12 @@ export default function Settings() {
       content: 'Triggers',
       title: 'PAGES RESTRICTIONS',
       panelID: 'setting-triggers-content',
-      body: <Triggers />
+      body: (
+        <Triggers
+          setting={setting}
+          onChangeSetting={(key, value) => handleSettingChange(key, value)}
+        />
+      )
     }
   ];
   return (
