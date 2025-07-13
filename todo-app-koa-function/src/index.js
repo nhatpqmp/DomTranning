@@ -1,7 +1,7 @@
 // src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './components/App/App';
+import App from './pages/App/App';
 import '@shopify/polaris/build/esm/styles.css';
 import { AppProvider } from '@shopify/polaris';
 

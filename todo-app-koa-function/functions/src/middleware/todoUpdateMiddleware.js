@@ -6,8 +6,7 @@ async function todoUpdateMiddleware(ctx, next) {
 
         const schema = yup.object().shape({
             title: yup.string(),
-            completed: yup.boolean(),
-            userId: yup.number()
+            completed: yup.boolean()
         });
 
         await schema.validate(updateData, { abortEarly: false });

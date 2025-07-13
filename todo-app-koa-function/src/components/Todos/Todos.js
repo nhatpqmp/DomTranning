@@ -28,6 +28,8 @@ const Todos = ({ todos, selected, handleSelect, setTodos }) => {
                 method: 'DELETE'
             });
 
+            console.log(id);
+
             setTodos(prev => prev.filter(t => t.id !== id));
         } catch (err) {
             console.error('Failed to delete todo', err);

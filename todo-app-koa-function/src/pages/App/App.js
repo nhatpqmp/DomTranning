@@ -7,12 +7,12 @@ import {
 } from '@shopify/polaris';
 import '@shopify/polaris/build/esm/styles.css';
 import useFetchApi from "../../hooks/useFetchApi";
-import BulkDelete from "../Actions/BulkDelete";
-import BulkComplete from "../Actions/BulkComplete";
-import BulkIncomplete from "../Actions/BulkIncomplete";
-import Todos from "../Todos/Todos";
-import Add from "../Actions/Add";
-import TopBarExample from "../TopBarExample/TopBarExample";
+import BulkDelete from "../../components/Actions/BulkDelete";
+import BulkComplete from "../../components/Actions/BulkComplete";
+import BulkIncomplete from "../../components/Actions/BulkIncomplete";
+import Todos from "../../components/Todos/Todos";
+import Add from "../../components/Actions/Add";
+import TopBarExample from "../../layouts/TopBarExample/TopBarExample";
 
 function App() {
     const { data: todos, setData: setTodos, loading, fetched } = useFetchApi({
@@ -41,7 +41,10 @@ function App() {
                         })
                     )
                 );
-            } else {
+            }
+
+            if (action === 'complete' || action === 'incomplete')
+            {
                 const completedValue = action === 'complete';
                 await Promise.all(
                     selected.map(id =>
@@ -65,32 +68,33 @@ function App() {
 
 
     const handleAddTodo = async (title) => {
-        if (!title) return;
+        try {
+            if (!title) return;
 
-        const newTodo = {
-            id: Date.now(),
-            userId: 1,
-            title,
-            completed: false,
-        };
+            const newTodo = {
+                title,
+                completed: false,
+            };
 
-        const res = await fetch('http://localhost:5000/api/todos', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(newTodo)
-        });
+            const res = await fetch('http://localhost:5000/api/todos', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newTodo)
+            });
 
-        if (res.ok) {
-            const updated = await fetch('http://localhost:5000/api/todos');
-            const json = await updated.json();
-            setTodos(json.data || []);
-            setActiveModal(false);
-        } else {
-            console.error("Add failed:", await res.text());
+            if (res.ok) {
+                const updated = await fetch('http://localhost:5000/api/todos');
+                const json = await updated.json();
+                setTodos(json.data || []);
+                setActiveModal(false);
+            } else {
+                console.error("Add failed:", await res.text());
+            }
+        } catch (error) {
+            console.error("Adding failed:", error);
         }
+
     };
-
-
 
     const handlerModalChange = () => {
         setActiveModal(prev => !prev);

@@ -7,8 +7,13 @@ const {
 } = require('../database/todoRepository');
 
 async function getAll(ctx) {
-    const todos = await getTodos();
-    ctx.body = { data: todos };
+    try {
+        const todos = await getTodos();
+        ctx.body = { data: todos };
+    } catch (e) {
+        ctx.status = 400;
+        ctx.body = { error: e.message };
+    }
 }
 
 async function getTodo(ctx) {
@@ -23,7 +28,6 @@ async function getTodo(ctx) {
 
 async function createTodo(ctx) {
     try {
-        console.error(ctx.req.body);
         const data = ctx.req.body;
 
         await add(data);
@@ -34,8 +38,6 @@ async function createTodo(ctx) {
         ctx.body = { success: false, message: e.message };
     }
 }
-
-
 
 async function updateTodo(ctx) {
     try {
@@ -48,8 +50,13 @@ async function updateTodo(ctx) {
 }
 
 async function deleteTodo(ctx) {
-    await remove(ctx.params.id);
-    ctx.body = { success: true };
+    try {
+        await remove(ctx.params.id);
+        ctx.body = { success: true };
+    } catch (e) {
+        ctx.status = 500;
+        ctx.body = { error: e.message };
+    }
 }
 
 module.exports = {

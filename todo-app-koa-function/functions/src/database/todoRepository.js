@@ -11,30 +11,51 @@ const db = admin.firestore();
 const todosCol = db.collection('todos');
 
 async function getAll() {
-    const snapshot = await todosCol.get();
-    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    try {
+        const snapshot = await todosCol.get();
+        return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    } catch (e) {
+        console.log('error getting all todos', e);
+    }
 }
 
 async function getOne(id) {
-    const docRef = todosCol.doc(id);
-    const docSnap = await docRef.get();
-    if (!docSnap.exists) throw new Error('Todo not found');
-    return { id: docSnap.id, ...docSnap.data() };
+    try {
+        const docRef = todosCol.doc(id);
+        const docSnap = await docRef.get();
+        if (!docSnap.exists) console.log('Todo not found');
+        return { id: docSnap.id, ...docSnap.data() };
+    } catch (e) {
+        console.error('Error getting todo', e);
+    }
+
 }
 
 async function add(data) {
-    const docRef = todosCol.doc(data.id.toString());
-    await docRef.set(data);
+    try {
+        const docRef = await todosCol.add(data);
+        console.log('Document written with ID: ', docRef.id);
+    } catch (e) {
+        console.error('Error adding todo: ', e);
+    }
 }
 
 async function update(id, updatedData) {
-    const docRef = todosCol.doc(id.toString());
-    await docRef.update(updatedData);
+    try {
+        const docRef = todosCol.doc(id);
+        await docRef.update(updatedData);
+    } catch (e) {
+        console.error('Error updating todo: ', e);
+    }
 }
 
 async function remove(id) {
-    const docRef = todosCol.doc(id.toString());
-    await docRef.delete();
+    try {
+        const docRef = todosCol.doc(id);
+        await docRef.delete();
+    } catch (e) {
+        console.error('Error deleting todo: ', e);
+    }
 }
 
 module.exports = {
