@@ -20,6 +20,7 @@ import Triggers from '@assets/components/Setting/Triggers';
 import useFetchApi from '@assets/hooks/api/useFetchApi';
 import Loading from '@assets/components/Loading';
 import DefaultSetting from '@assets/pages/Settings/defaultSetting';
+import {api} from '@assets/helpers';
 
 /**
  * @return {JSX.Element}
@@ -35,16 +36,37 @@ export default function Settings() {
     source: 'AVADA',
     date: 'March 8, 2021'
   };
-  const {data: setting, setData: setSetting, loading} = useFetchApi({
+  const {data: setting, setData: setSetting, loading, setLoading} = useFetchApi({
     url: '/settings',
     defaultData: DefaultSetting
   });
 
   const handleSettingChange = (key, value) => {
-    setSetting(prevInput => ({
-      ...prevInput,
-      [key]: value
-    }));
+    try {
+      setSetting(prevInput => ({
+        ...prevInput,
+        [key]: value
+      }));
+    } catch (e) {
+      console.log('False to change setting:', e);
+    }
+  };
+
+  const handleSaveSetting = async () => {
+    try {
+      setLoading(true);
+      await api('/settings', {
+        headers: {'Content-Type': 'application/json'},
+        method: 'POST',
+        body: JSON.stringify({setting})
+      });
+
+      console.log('Setting saved successfully:');
+    } catch (e) {
+      console.error('Failed to save setting:', e);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const [selected, setSelected] = useState(0);
@@ -79,7 +101,9 @@ export default function Settings() {
         loading: loading,
         content: 'Save',
         tone: 'success',
-        onAction: () => {
+        onAction: async () => {
+          await handleSaveSetting();
+          setSelected(1);
           console.log('Save clicked');
         }
       }}
