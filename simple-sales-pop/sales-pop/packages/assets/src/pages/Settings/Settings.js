@@ -48,7 +48,7 @@ export default function Settings() {
         [key]: value
       }));
     } catch (e) {
-      console.log('False to change setting:', e);
+      console.log('Failed to change setting:', e);
     }
   };
 

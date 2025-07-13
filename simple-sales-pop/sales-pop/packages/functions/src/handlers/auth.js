@@ -51,6 +51,15 @@ app.use(
         success: true
       });
     },
+    afterInstall: async (ctx, shop, accessToken) => {
+      const {installShop} = await import('@functions/install/installShop');
+      try {
+        await installShop(shop, accessToken);
+        console.log('Successfully sync order');
+      } catch (e) {
+        console.error(`Failed to sync order:`, e);
+      }
+    },
     optionalScopes: shopifyOptionalScopes
   }).routes()
 );
