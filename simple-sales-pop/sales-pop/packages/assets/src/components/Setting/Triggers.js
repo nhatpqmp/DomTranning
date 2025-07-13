@@ -1,32 +1,26 @@
 import {FormLayout, Select, TextField, Text} from '@shopify/polaris';
 import {useState, useCallback} from 'react';
+import {value} from 'firebase-tools/lib/deploymentTool';
 
-function Triggers() {
-  const [selected, setSelected] = useState('allPages');
-
-  const handleSelectChange = useCallback(value => setSelected(value), []);
-
-  const [includePages, setIncludePages] = useState('');
-
-  const handleIncludePagesChange = useCallback(value => setIncludePages(value), []);
-
-  const [excludedPages, setExcludedPages] = useState('');
-
-  const handleExcludedPagesChange = useCallback(value => setExcludedPages(value), []);
-
+function Triggers({setting, onChangeSetting}) {
   const options = [
-    {label: 'All pages', value: 'allPages'},
-    {label: 'Specific pages', value: 'specificPages'}
+    {label: 'All pages', value: 'all'},
+    {label: 'Specific pages', value: 'specific'}
   ];
 
   return (
     <FormLayout>
-      <Select label="Date range" options={options} onChange={handleSelectChange} value={selected} />
+      <Select
+        label="Date range"
+        options={options}
+        onChange={value => onChangeSetting('allowShow', value)}
+        value={selected}
+      />
       <FormLayout>
         <TextField
           label="Include pages"
-          value={includePages}
-          onChange={handleIncludePagesChange}
+          value={setting.includedUrls}
+          onChange={value => onChangeSetting('includedUrls', value)}
           multiline={4}
           autoComplete="off"
           helpText={
@@ -38,8 +32,8 @@ function Triggers() {
         {selected === 'specificPages' && (
           <TextField
             label="Excluded pages"
-            value={excludedPages}
-            onChange={handleExcludedPagesChange}
+            value={setting.excludedUrls}
+            onChange={value => onChangeSetting('excludedUrls', value)}
             multiline={4}
             autoComplete="off"
             helpText={
