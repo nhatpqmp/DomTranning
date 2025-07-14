@@ -57,11 +57,11 @@ export default function Settings() {
       setLoading(true);
       await api('/settings', {
         headers: {'Content-Type': 'application/json'},
-        method: 'POST',
-        body: JSON.stringify({setting})
+        method: 'PUT',
+        body: setting
       });
 
-      console.log('Setting saved successfully:');
+      console.log('Setting saved successfully.');
     } catch (e) {
       console.error('Failed to save setting:', e);
     } finally {
@@ -108,7 +108,6 @@ export default function Settings() {
         tone: 'success',
         onAction: async () => {
           await handleSaveSetting();
-          setSelected(1);
           console.log('Save clicked');
         }
       }}

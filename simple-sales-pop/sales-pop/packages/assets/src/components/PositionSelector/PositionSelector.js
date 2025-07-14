@@ -30,14 +30,7 @@ function getPopupPositionStyle(value, isSelected) {
   }
 }
 
-function PositionSelector() {
-  const [selected, setSelected] = useState('bottom-left');
-
-  const handleSelect = value => {
-    console.log('Selected position:', value);
-    setSelected(value);
-  };
-
+function PositionSelector({position, onChange}) {
   return (
     <BlockStack gap="200">
       <Text variant="bodySm" tone="subdued">
@@ -46,12 +39,12 @@ function PositionSelector() {
 
       <InlineGrid columns={4} gap="200">
         {positions.map(pos => {
-          const isSelected = selected === pos.value;
+          const isSelected = position === pos.value;
 
           return (
             <Box
               key={pos.value}
-              onClick={() => handleSelect(pos.value)}
+              onClick={() => onChange(pos.value)}
               cursor="pointer"
               borderWidth="050"
               borderRadius="200"

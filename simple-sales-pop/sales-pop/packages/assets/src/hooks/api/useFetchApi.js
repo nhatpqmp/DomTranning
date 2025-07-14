@@ -73,6 +73,7 @@ export default function useFetchApi({
     total,
     setTotal,
     loading,
+    setLoading,
     fetched,
     setFetched
   };

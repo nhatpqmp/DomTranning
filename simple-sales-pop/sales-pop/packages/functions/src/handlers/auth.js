@@ -8,6 +8,11 @@ import createErrorHandler from '@functions/middleware/errorHandler';
 import firebase from 'firebase-admin';
 import appConfig from '@functions/config/app';
 import shopifyOptionalScopes from '@functions/config/shopifyOptionalScopes';
+import {installShopHandler} from '@functions/controllers/notificationController';
+import {createSetting} from '@functions/repositories/settingRepository';
+import defaultSetting from '@functions/install/defaultSetting';
+import {getSetting} from '@functions/repositories/settingRepository';
+import {afterInstall} from "@functions/services/affterInstallService";
 
 if (firebase.apps.length === 0) {
   firebase.initializeApp();
@@ -51,11 +56,10 @@ app.use(
         success: true
       });
     },
-    afterInstall: async (ctx, shop, accessToken) => {
-      const {installShop} = await import('@functions/install/installShop');
+    afterInstall: async ctx => {
       try {
-        await installShop(shop, accessToken);
-        console.log('Successfully sync order');
+        await afterInstall();
+        console.log('Successfully sync setting');
       } catch (e) {
         console.error(`Failed to sync order:`, e);
       }

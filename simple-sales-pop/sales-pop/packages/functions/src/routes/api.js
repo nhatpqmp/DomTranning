@@ -21,9 +21,10 @@ export default function apiRouter(isEmbed = false) {
   router.delete('/subscriptions/:id', subscriptionController.deleteOne);
 
   router.get('/notifications', notificationController.getList);
+  router.post('/notifications/sync', notificationController.installShopHandler);
 
   router.get('/settings', settingController.getOne);
-  router.get('/settings', settingController.updateOne);
+  router.put('/settings', settingController.updateOne);
 
   return router;
 }

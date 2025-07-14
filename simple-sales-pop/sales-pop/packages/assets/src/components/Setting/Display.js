@@ -45,7 +45,7 @@ export default function Display({setting, onChangeSetting}) {
               type="number"
               autoComplete="off"
               min={0}
-              max={80}
+              max={60}
               suffix="second(s)"
               onChange={value => onChangeSetting('displayDuration', parseInt(value))}
             />
@@ -71,7 +71,7 @@ export default function Display({setting, onChangeSetting}) {
               type="number"
               autoComplete="off"
               min={0}
-              max={80}
+              max={60}
               suffix="second(s)"
               onChange={value => onChangeSetting('firstDelay', parseInt(value))}
             />
@@ -99,7 +99,7 @@ export default function Display({setting, onChangeSetting}) {
               type="number"
               autoComplete="off"
               min={0}
-              max={80}
+              max={60}
               suffix="second(s)"
               onChange={value => onChangeSetting('popsInterval', parseInt(value))}
             />

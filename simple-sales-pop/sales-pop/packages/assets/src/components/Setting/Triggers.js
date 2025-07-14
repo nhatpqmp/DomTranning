@@ -1,5 +1,4 @@
 import {FormLayout, Select, TextField, Text} from '@shopify/polaris';
-import {useState, useCallback} from 'react';
 import {value} from 'firebase-tools/lib/deploymentTool';
 
 function Triggers({setting, onChangeSetting}) {
@@ -14,7 +13,7 @@ function Triggers({setting, onChangeSetting}) {
         label="Date range"
         options={options}
         onChange={value => onChangeSetting('allowShow', value)}
-        value={selected}
+        value={setting.allowShow}
       />
       <FormLayout>
         <TextField
@@ -29,7 +28,7 @@ function Triggers({setting, onChangeSetting}) {
             </Text>
           }
         />
-        {selected === 'specificPages' && (
+        {setting.allowShow === 'specific' && (
           <TextField
             label="Excluded pages"
             value={setting.excludedUrls}

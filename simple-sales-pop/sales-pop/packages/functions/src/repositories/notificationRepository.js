@@ -25,3 +25,31 @@ export async function getNotifications(shopId, query = {}) {
     };
   });
 }
+
+/**
+ *
+ * @param shopId
+ * @param notifications
+ * @returns {Promise<void>}
+ */
+export async function addNotifications(shopId, notifications = []) {
+  if (!notifications.length) return;
+
+  try {
+    const batch = firestore.batch();
+
+    notifications.forEach(item => {
+      const docRef = collection.doc();
+      batch.set(docRef, {
+        ...item,
+        shopId,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      });
+    });
+
+    await batch.commit();
+  } catch (e) {
+    console.log('Error add notifications', e);
+  }
+}

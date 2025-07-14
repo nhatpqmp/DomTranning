@@ -2,6 +2,7 @@ import React, {useState, useCallback} from 'react';
 import {Page, Layout, ResourceList, Card} from '@shopify/polaris';
 import Notification from '@assets/components/Notification/Notification';
 import useFetchApi from '@assets/hooks/api/useFetchApi';
+import {api} from '@assets/helpers';
 
 export default function Notifications() {
   const [selectedItems, setSelectedItems] = useState([]);
@@ -24,7 +25,28 @@ export default function Notifications() {
   };
 
   return (
-    <Page title="Notifications" subtitle="List of sales notifications from Shopify">
+    <Page
+      title="Notifications"
+      subtitle="List of sales notifications from Shopify"
+      primaryAction={{
+        content: 'Test Install',
+        onAction: async () => {
+          try {
+            const res = await api('/notifications/sync', {
+              method: 'POST'
+            });
+
+            if (res.success) {
+              console.log(res.data);
+            } else {
+              console.error('Error:', res.error);
+            }
+          } catch (err) {
+            console.error('API call failed:', err);
+          }
+        }
+      }}
+    >
       <Layout>
         <Layout.Section>
           <Card>
@@ -39,16 +61,7 @@ export default function Notifications() {
               pagination={{
                 hasNext: !!pageInfo?.hasNextPage,
                 onNext: () => {
-                  if (pageInfo?.endCursor) {
-                    fetchApi(
-                      '/api/notifications',
-                      {
-                        after: pageInfo.endCursor,
-                        sort: sortValue
-                      },
-                      true
-                    );
-                  }
+                  console.log('Next page');
                 }
               }}
               sortValue={sortValue}
