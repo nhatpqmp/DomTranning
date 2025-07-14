@@ -58,7 +58,7 @@ app.use(
     },
     afterInstall: async ctx => {
       try {
-        await afterInstall();
+        await afterInstall(ctx);
         console.log('Successfully sync setting');
       } catch (e) {
         console.error(`Failed to sync order:`, e);

@@ -2,17 +2,17 @@ import {installShopHandler} from '@functions/controllers/notificationController'
 import {createSetting, getSetting} from '@functions/repositories/settingRepository';
 import defaultSetting from '@functions/install/defaultSetting';
 
-export async function afterInstall() {
+export async function afterInstall(ctx) {
   try {
-    await Promise.all([syncOrder(), addDefaultSetting()]);
+    await Promise.all([syncOrder(ctx), addDefaultSetting()]);
   } catch (e) {
     console.error(`Failed to handle after install`, e);
   }
 }
 
-export async function syncOrder() {
+export async function syncOrder(ctx) {
   try {
-    await installShopHandler();
+    await installShopHandler(ctx);
     console.log('Successfully sync order');
   } catch (e) {
     console.error(`Failed to sync order:`, e);
