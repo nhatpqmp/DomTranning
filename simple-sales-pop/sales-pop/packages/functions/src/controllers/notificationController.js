@@ -30,41 +30,36 @@ export async function getList(ctx) {
 export async function installShopHandler(ctx) {
   try {
     const shopData = getCurrentShopData(ctx);
-
     const shopify = await initShopify(shopData);
     const shopQuery = loadGraphQL('/order.graphql');
     const orderData = await shopify.graphql(shopQuery);
 
-    const notifications = [];
-
-    for (const edge of orderData.orders.edges) {
+    const notifications = orderData.orders.edges.map(edge => {
       const order = edge.node;
       const address = order.shippingAddress || {};
-      const lineItemEdge = order.lineItems?.edges?.[0];
-      const lineItem = lineItemEdge?.node || {};
+      const lineItem = order.lineItems?.edges?.[0]?.node || {};
       const product = lineItem.product || {};
-      const imageEdge = product.images?.edges?.[0];
-      const image = imageEdge?.node || {};
+      const image = product.images?.edges?.[0]?.node || {};
 
       const productIdStr = product.id?.split('/').pop();
       const productId = productIdStr ? parseInt(productIdStr, 10) : null;
 
-      if (productId && lineItem.title && image.originalSrc) {
-        notifications.push({
-          firstName: address.firstName || '',
-          city: address.city || '',
-          country: address.country || '',
-          productName: lineItem.title,
-          productId,
-          productImage: image.originalSrc,
-          timestamp: order.createdAt
-        });
-      }
-    }
+      return {
+        firstName: address.firstName || '',
+        city: address.city || '',
+        country: address.country || '',
+        productName: lineItem.title,
+        productId,
+        productImage: image.originalSrc,
+        timestamp: order.createdAt
+      };
+    });
+
     await addNotifications(shopData.id, notifications);
+
     ctx.body = {data: notifications, success: true};
   } catch (e) {
     console.error(e);
-    ctx.body = {data: [], success: false};
+    ctx.body = {data: [], success: false, error: e.message};
   }
 }
