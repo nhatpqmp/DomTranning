@@ -14,7 +14,7 @@ import React from 'react';
 
 export default function Notification({item}) {
   return (
-    <ResourceItem>
+    <ResourceItem id={item.id}>
       <InlineStack wrap={false} align="space-between">
         <Card>
           <InlineStack wrap={false} gap="400">

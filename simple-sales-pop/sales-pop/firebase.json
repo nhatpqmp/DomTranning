@@ -46,6 +46,10 @@
         "function": "api"
       },
       {
+        "source": "/webhook/**",
+        "function": "webhook"
+      },
+      {
         "source": "/apiSa/**",
         "function": "apiSa"
       },

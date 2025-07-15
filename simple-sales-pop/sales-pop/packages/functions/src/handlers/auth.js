@@ -1,6 +1,6 @@
 import App from 'koa';
 import 'isomorphic-fetch';
-import {contentSecurityPolicy, shopifyAuth} from '@avada/core';
+import {contentSecurityPolicy, getShopByShopifyDomain, shopifyAuth} from '@avada/core';
 import shopifyConfig from '@functions/config/shopify';
 import render from 'koa-ejs';
 import path from 'path';
@@ -9,6 +9,9 @@ import firebase from 'firebase-admin';
 import appConfig from '@functions/config/app';
 import shopifyOptionalScopes from '@functions/config/shopifyOptionalScopes';
 import {afterInstall} from '@functions/services/affterInstallService';
+import {createWebhooks, registerWebhook} from '@functions/services/webhookService';
+import shopify from '@functions/config/shopify';
+import {initShopify} from '../../lib/services/shopifyService';
 
 if (firebase.apps.length === 0) {
   firebase.initializeApp();
@@ -54,10 +57,16 @@ app.use(
     },
     afterInstall: async ctx => {
       try {
-        await afterInstall(ctx);
-        console.log('Successfully sync setting');
+        const shopifyDomain = ctx.state.shopify.shop;
+        const shop = await getShopByShopifyDomain(shopifyDomain);
+        const baseTasks = [afterInstall(ctx)];
+        const tasks =
+          appConfig.baseUrl !== 'joy.avada.io' && appConfig.baseUrl.includes('trycloudflare')
+            ? [...baseTasks, registerWebhook(shopifyDomain, shop.accessToken)]
+            : baseTasks;
+        await Promise.all(tasks);
       } catch (e) {
-        console.error(`Failed to sync order:`, e);
+        console.error(`Failed to handle after install:`, e);
       }
     },
     optionalScopes: shopifyOptionalScopes

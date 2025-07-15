@@ -14,10 +14,13 @@ export default function Notifications() {
     initQueries: {sort: sortValue}
   });
 
-  const handleSortChange = useCallback(value => {
-    setSortValue(value);
-    fetchApi('/notifications', {sort: value});
-  }, []);
+  const handleSortChange = useCallback(
+    value => {
+      setSortValue(value);
+      fetchApi('/notifications', {sort: value});
+    },
+    [fetchApi]
+  );
 
   const resourceName = {
     singular: 'notification',

@@ -32,9 +32,9 @@ export async function getNotifications(shopId, query = {}) {
  * @param notifications
  * @returns {Promise<void>}
  */
-export async function addNotifications(shopId, notifications = []) {
+export async function addNotifications({shopId, notifications}) {
+  console.log('Add notifications', notifications);
   if (!notifications.length) return;
-
   try {
     const batch = firestore.batch();
 
@@ -49,7 +49,23 @@ export async function addNotifications(shopId, notifications = []) {
     });
 
     await batch.commit();
+    console.log('Successfully add notifications');
   } catch (e) {
     console.log('Error add notifications', e);
+  }
+}
+
+export async function createNotification({shopId, notification}) {
+  try {
+    const docRef = collection.doc();
+    await docRef.set({
+      ...notification,
+      shopId,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    });
+    console.log('Successfully create notification');
+  } catch (e) {
+    console.log('Error create notification', e);
   }
 }

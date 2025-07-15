@@ -1,13 +1,12 @@
 import App from 'koa';
-import createErrorHandler from '@functions/middleware/errorHandler';
-import {verifyRequest} from '@avada/core';
 import * as errorService from '@functions/services/errorService';
+import router from '@functions/routes/webhook';
 
 const api = new App();
 api.proxy = true;
 
-api.use(createErrorHandler());
-api.use(verifyRequest());
+api.use(router.allowedMethods());
+api.use(router.routes());
 
 api.on('error', errorService.handleError);
 

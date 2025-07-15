@@ -1,8 +1,7 @@
 import {getCurrentShop, getCurrentShopData} from '@functions/helpers/auth';
 import {getNotifications} from '@functions/repositories/notificationRepository';
 import {initShopify} from '@functions/services/shopifyService';
-import {loadGraphQL} from '@functions/helpers/graphql/graphqlHelpers';
-import {addNotifications} from '@functions/repositories/notificationRepository';
+import {registerWebhook} from '@functions/services/webhookService';
 
 /**
  * @param {Context|Object|*} ctx
@@ -22,44 +21,18 @@ export async function getList(ctx) {
   }
 }
 
-/**
- *
- * @param ctx
- * @returns {Promise<void>}
- */
-export async function installShopHandler(ctx) {
+export async function afterInstall(ctx) {
   try {
     const shopData = getCurrentShopData(ctx);
     const shopify = await initShopify(shopData);
-    const shopQuery = loadGraphQL('/order.graphql');
-    const orderData = await shopify.graphql(shopQuery);
 
-    const notifications = orderData.orders.edges.map(edge => {
-      const order = edge.node;
-      const address = order.shippingAddress || {};
-      const lineItem = order.lineItems?.edges?.[0]?.node || {};
-      const product = lineItem.product || {};
-      const image = product.images?.edges?.[0]?.node || {};
-
-      const productIdStr = product.id?.split('/').pop();
-      const productId = productIdStr ? parseInt(productIdStr, 10) : null;
-
-      return {
-        firstName: address.firstName || '',
-        city: address.city || '',
-        country: address.country || '',
-        productName: lineItem.title,
-        productId,
-        productImage: image.originalSrc,
-        timestamp: order.createdAt
-      };
+    const data = await registerWebhook(shopData.shopifyDomain, shopify.options.accessToken);
+    return (ctx.body = {
+      data: data,
+      success: true
     });
-
-    await addNotifications(shopData.id, notifications);
-
-    ctx.body = {data: notifications, success: true};
+    // await afterInstall(ctx);
   } catch (e) {
-    console.error(e);
-    ctx.body = {data: [], success: false, error: e.message};
+    return (ctx.body = {data: [], error: e.message});
   }
 }
