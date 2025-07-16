@@ -7,7 +7,7 @@ import {isEmpty} from '@avada/utils';
  * @param accessToken
  * @returns {Promise<Shopify.IWebhook>}
  */
-export async function registerWebhook(shopifyDomain, accessToken) {
+export async function registerWebhook({shopifyDomain, accessToken}) {
   try {
     const shopify = new Shopify({
       shopName: shopifyDomain,

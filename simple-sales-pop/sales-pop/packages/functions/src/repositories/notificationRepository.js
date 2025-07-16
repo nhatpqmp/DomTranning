@@ -9,21 +9,92 @@ const collection = firestore.collection('notifications');
 /**
  * @param shopId
  * @param query
- * @returns {Promise<{data: *[], total?: number, pageInfo: {hasNext: boolean, hasPre: boolean, totalPage?: number}}>}
+ * @returns {Promise<{data: *[], total?: number, pageInfo: {hasNext: boolean, hasPre: boolean, totalPage?: number, lastVisible?: DocumentSnapshot}}>}
  */
-export async function getNotifications(shopId, query = {}) {
-  const snapshot = await collection.where('shopId', '==', shopId).get();
-  return snapshot.docs.map(doc => {
-    const data = formatDateFields(doc.data());
-    const date = data.timestamp ? moment(data.timestamp).format('MMM DD YY') : '';
-    const dayAgo = data.timestamp ? moment(data.timestamp).fromNow() : '';
+export async function getNotifications({shopId, query = {}}) {
+  try {
+    const direction = query.sort || 'desc';
+    const limit = Number(query.limit) || 10;
+    const after = query.after;
+    const before = query.before;
+
+    let ref = collection.where('shopId', '==', shopId).orderBy('updatedAt', direction);
+
+    if (after) {
+      const afterDocSnap = await collection.doc(after).get();
+      if (afterDocSnap.exists) {
+        ref = ref.startAfter(afterDocSnap);
+      }
+    }
+
+    if (before) {
+      const beforeDocSnap = await collection.doc(before).get();
+      if (beforeDocSnap.exists) {
+        ref = ref.endBefore(beforeDocSnap);
+      }
+    }
+
+    ref = ref.limit(limit);
+
+    const snapshot = await ref.get();
+    const docs = snapshot.docs;
+
+    const data = docs.map(doc => {
+      const d = formatDateFields(doc.data());
+      const date = d.timestamp ? moment(d.timestamp).format('MMM DD YY') : '';
+      const dayAgo = d.timestamp ? moment(d.timestamp).fromNow() : '';
+      return {
+        ...d,
+        id: doc.id,
+        date,
+        dayAgo
+      };
+    });
+
+    const firstVisible = docs[0];
+    const lastVisible = docs[docs.length - 1];
+
+    let hasNext = false;
+    let hasPre = false;
+
+    if (lastVisible) {
+      const nextRef = collection
+        .where('shopId', '==', shopId)
+        .orderBy('updatedAt', direction)
+        .startAfter(lastVisible)
+        .limit(1);
+
+      const nextSnap = await nextRef.get();
+      hasNext = !nextSnap.empty;
+    }
+
+    if (firstVisible) {
+      const prevRef = collection
+        .where('shopId', '==', shopId)
+        .orderBy('updatedAt', direction)
+        .endBefore(firstVisible)
+        .limit(1);
+
+      const prevSnap = await prevRef.get();
+      hasPre = !prevSnap.empty;
+    }
+
     return {
-      ...data,
-      id: doc.id,
-      date,
-      dayAgo
+      data,
+      pageInfo: {
+        hasNext,
+        hasPre,
+        startCursor: firstVisible?.id || null,
+        endCursor: lastVisible?.id || null
+      }
     };
-  });
+  } catch (e) {
+    console.error('Error get notifications', e);
+    return {
+      data: [],
+      pageInfo: {hasNext: false, hasPre: false}
+    };
+  }
 }
 
 /**

@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import {Page, Layout, ResourceList, Card} from '@shopify/polaris';
 import Notification from '@assets/components/Notification/Notification';
 import useFetchApi from '@assets/hooks/api/useFetchApi';
@@ -6,21 +6,52 @@ import {api} from '@assets/helpers';
 
 export default function Notifications() {
   const [selectedItems, setSelectedItems] = useState([]);
-  const [sortValue, setSortValue] = useState('DATE_MODIFIED_DESC');
+  const [sortValue, setSortValue] = useState('desc');
+  const [cursor, setCursor] = useState({after: null, before: null});
+  const [hasNext, setHasNext] = useState(true);
 
   const {data: items, fetchApi, loading, pageInfo} = useFetchApi({
     url: '/notifications',
     defaultData: [],
-    initQueries: {sort: sortValue}
+    initLoad: false
   });
 
-  const handleSortChange = useCallback(
-    value => {
-      setSortValue(value);
-      fetchApi('/notifications', {sort: value});
-    },
-    [fetchApi]
-  );
+  useEffect(() => {
+    const params = {sort: sortValue};
+    if (cursor.after) params.after = cursor.after;
+    if (cursor.before) params.before = cursor.before;
+    fetchApi('/notifications', params);
+  }, [sortValue, cursor]);
+
+  useEffect(() => {
+    setHasNext(pageInfo?.hasNext ?? false);
+  }, [pageInfo]);
+
+  const handleSortChange = useCallback(value => {
+    setSortValue(value);
+    setCursor({after: null, before: null});
+    setSelectedItems([]);
+  }, []);
+
+  const handlePagination = useCallback(() => {
+    if (!pageInfo?.endCursor) return;
+    setCursor(pageInfo.endCursor);
+    setSelectedItems([]);
+    fetchApi('/notifications', {
+      sort: sortValue,
+      after: pageInfo.endCursor
+    });
+  }, [fetchApi, pageInfo?.endCursor, sortValue]);
+
+  const handlePreviousPagination = useCallback(() => {
+    if (!pageInfo?.startCursor) return;
+    setCursor(pageInfo.startCursor);
+    setSelectedItems([]);
+    fetchApi('/notifications', {
+      sort: sortValue,
+      before: pageInfo.startCursor
+    });
+  }, [fetchApi, pageInfo?.startCursor, sortValue]);
 
   const resourceName = {
     singular: 'notification',
@@ -35,11 +66,15 @@ export default function Notifications() {
         content: 'Test Install',
         onAction: async () => {
           try {
-            const res = await api('/notifications/sync', {
-              method: 'POST'
-            });
+            const res = await api(
+              '/notifications/sync?shopifyDomain=sales-pop-store-final.myshopify.com',
+              {
+                method: 'POST'
+              }
+            );
 
             if (res.success) {
+              console.log('Success register webhook:', res.data);
               console.log(res.data);
             } else {
               console.error('Error:', res.error);
@@ -62,15 +97,15 @@ export default function Notifications() {
               onSelectionChange={setSelectedItems}
               selectable
               pagination={{
-                hasNext: !!pageInfo?.hasNextPage,
-                onNext: () => {
-                  console.log('Next page');
-                }
+                hasNext,
+                onNext: handlePagination,
+                hasPrevious: pageInfo?.hasPre,
+                onPrevious: handlePreviousPagination
               }}
               sortValue={sortValue}
               sortOptions={[
-                {label: 'Newest update', value: 'DATE_MODIFIED_DESC'},
-                {label: 'Oldest update', value: 'DATE_MODIFIED_ASC'}
+                {label: 'Newest update', value: 'desc'},
+                {label: 'Oldest update', value: 'asc'}
               ]}
               onSortChange={handleSortChange}
             />

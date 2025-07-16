@@ -30,31 +30,33 @@ export async function listenNewOrder(ctx) {
 }
 
 /**
- *
  * @param shopify
  * @param orderData
- * @returns {Promise<[{orderId, name, totalPrice, customerName: (*|string), product: (null|{productId: *, productName: *, productImage, quantity: *}), createdAt}]>}
+ * @returns {Promise<{firstName, city, country, productName, productId, productImage, timestamp}>}
  */
 export async function getNotificationItem(shopify, orderData) {
   const lineItem = orderData.line_items?.[0];
+  const shippingAddress = orderData.shipping_address || {};
+  const productId = lineItem?.product_id;
 
-  const product = lineItem
-    ? {
-        productId: lineItem.product_id,
-        productName: lineItem.title,
-        productImage: lineItem.image_url || (lineItem.image && lineItem.image.src) || null,
-        quantity: lineItem.quantity
-      }
-    : null;
+  let productImage = null;
 
-  return [
-    {
-      orderId: orderData.id,
-      name: orderData.name,
-      totalPrice: orderData.total_price,
-      customerName: orderData.customer?.first_name || 'Guest',
-      product,
-      createdAt: orderData.created_at
+  if (productId) {
+    try {
+      const product = await shopify.product.get(productId);
+      productImage = product?.image?.src || null;
+    } catch (err) {
+      console.error('Failed to fetch product image:', err);
     }
-  ];
+  }
+
+  return {
+    firstName: orderData.customer?.first_name || 'Guest',
+    city: shippingAddress.city || '',
+    country: shippingAddress.country || '',
+    productName: lineItem?.title || '',
+    productId: productId,
+    productImage: productImage,
+    timestamp: new Date(orderData.created_at)
+  };
 }

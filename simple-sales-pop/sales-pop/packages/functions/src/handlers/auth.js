@@ -59,12 +59,10 @@ app.use(
       try {
         const shopifyDomain = ctx.state.shopify.shop;
         const shop = await getShopByShopifyDomain(shopifyDomain);
-        const baseTasks = [afterInstall(ctx)];
-        const tasks =
-          appConfig.baseUrl !== 'joy.avada.io' && appConfig.baseUrl.includes('trycloudflare')
-            ? [...baseTasks, registerWebhook(shopifyDomain, shop.accessToken)]
-            : baseTasks;
-        await Promise.all(tasks);
+        await Promise.all([
+          afterInstall(ctx),
+          registerWebhook({shopifyDomain, accessToken: shop.accessToken})
+        ]);
       } catch (e) {
         console.error(`Failed to handle after install:`, e);
       }

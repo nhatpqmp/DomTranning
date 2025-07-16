@@ -34,6 +34,8 @@ export default function useFetchApi({
       const separateChar = path.includes('?') ? '&' : '?';
       const query = params ? separateChar + stringify(params) : '';
       const resp = await api(path + query);
+
+      console.log('Page Info lastVisible', resp.pageInfo);
       if (resp.hasOwnProperty('pageInfo')) setPageInfo(resp.pageInfo);
       if (resp.hasOwnProperty('count')) setCount(resp.count);
       if (resp.hasOwnProperty('total')) setTotal(resp.total);

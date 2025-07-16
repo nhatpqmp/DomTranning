@@ -12,3 +12,4 @@ export const auth = functions.https.onRequest(authHandler.callback());
 export const authSa = functions.https.onRequest(authSaHandler.callback());
 
 export const webhook = functions.https.onRequest(webhookHandler.callback());
+export const clientApi = functions.https.onRequest(webhookHandler.callback());

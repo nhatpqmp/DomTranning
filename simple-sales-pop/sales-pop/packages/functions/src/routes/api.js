@@ -5,7 +5,6 @@ import * as subscriptionController from '@functions/controllers/subscriptionCont
 import * as settingController from '@functions/controllers/settingController';
 import * as notificationController from '@functions/controllers/notificationController';
 import * as appNewsController from '@functions/controllers/appNewsController';
-import * as webhookController from '@functions/controllers/webhookController';
 import {getApiPrefix} from '@functions/const/app';
 
 export default function apiRouter(isEmbed = false) {
