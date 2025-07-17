@@ -3,7 +3,7 @@
 client_id = "9918f83fe0292772a1540b79cf546bab"
 name = "Sales Pop App"
 handle = "sales-pop-app"
-application_url = "https://friend-saver-jpg-refinance.trycloudflare.com/auth/shopify"
+application_url = "https://fitted-choices-pixels-distributors.trycloudflare.com/auth/shopify"
 embedded = true
 
 [webhooks]
@@ -11,10 +11,10 @@ api_version = "2025-07"
 
 [auth]
 redirect_urls = [
-  "https://friend-saver-jpg-refinance.trycloudflare.com/auth/shopify/callback",
-  "https://friend-saver-jpg-refinance.trycloudflare.com/authSa/shopify/callback",
-  "https://friend-saver-jpg-refinance.trycloudflare.com/auth/shopify/embed/callback",
-  "https://friend-saver-jpg-refinance.trycloudflare.com/auth/shopify/embed/callback/updateScopes",
+  "https://fitted-choices-pixels-distributors.trycloudflare.com/auth/shopify/callback",
+  "https://fitted-choices-pixels-distributors.trycloudflare.com/authSa/shopify/callback",
+  "https://fitted-choices-pixels-distributors.trycloudflare.com/auth/shopify/embed/callback",
+  "https://fitted-choices-pixels-distributors.trycloudflare.com/auth/shopify/embed/callback/updateScopes",
   "https://localhost:3000/auth/shopify/callback",
   "https://localhost:3000/authSa/shopify/callback",
   "https://localhost:3000/auth/shopify/embed/callback"

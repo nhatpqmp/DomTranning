@@ -5,6 +5,6 @@ const router = new Router({
   prefix: '/clientApi'
 });
 
-router.post('/notifications', notificationController.list);
+router.get('/notifications', notificationController.list);
 
 export default router;

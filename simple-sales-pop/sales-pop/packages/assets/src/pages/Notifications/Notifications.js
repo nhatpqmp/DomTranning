@@ -74,8 +74,8 @@ export default function Notifications() {
             );
 
             if (res.success) {
-              console.log('Success register webhook:', res.data);
-              console.log(res.data);
+              console.log('res:', res);
+              //console.log('Success register webhook:', res.data);
             } else {
               console.error('Error:', res.error);
             }

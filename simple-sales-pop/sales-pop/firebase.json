@@ -50,6 +50,10 @@
         "function": "webhook"
       },
       {
+        "source": "/clientApi/**",
+        "function": "clientApi"
+      },
+      {
         "source": "/apiSa/**",
         "function": "apiSa"
       },

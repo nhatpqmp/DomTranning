@@ -7,13 +7,13 @@ import {addNotifications} from '@functions/repositories/notificationRepository';
 
 export async function afterInstall(ctx) {
   try {
-    await Promise.all([syncOrder(ctx), addDefaultSetting()]);
+    await Promise.all([syncOrders(ctx), addDefaultSetting()]);
   } catch (e) {
     console.error(`Failed to handle after install`, e);
   }
 }
 
-export async function syncOrder(ctx) {
+export async function syncOrders(ctx) {
   try {
     await installShopHandler(ctx);
     console.log('Successfully sync order');
@@ -43,9 +43,11 @@ export async function addDefaultSetting() {
 export async function installShopHandler(ctx) {
   try {
     const shopData = getCurrentShopData(ctx);
-    const shopify = await initShopify(shopData);
+    const shopify = initShopify(shopData);
     const shopQuery = loadGraphQL('/order.graphql');
-    const orderData = await shopify.graphql(shopQuery);
+    const orderData = await shopify.graphql(shopQuery, {
+      limit: 30
+    });
 
     const notifications = orderData.orders.edges.map(edge => {
       const order = edge.node;
@@ -54,7 +56,6 @@ export async function installShopHandler(ctx) {
       const product = lineItem.product || {};
       const image = product.images?.edges?.[0]?.node || {};
 
-      const productIdStr = product.id?.split('/').pop();
       const productId = productIdStr ? parseInt(productIdStr, 10) : null;
 
       return {

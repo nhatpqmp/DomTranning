@@ -12,6 +12,7 @@ import {afterInstall} from '@functions/services/affterInstallService';
 import {createWebhooks, registerWebhook} from '@functions/services/webhookService';
 import shopify from '@functions/config/shopify';
 import {initShopify} from '../../lib/services/shopifyService';
+import {registerScriptTag} from "@functions/services/scriptTagService";
 
 if (firebase.apps.length === 0) {
   firebase.initializeApp();
@@ -61,7 +62,8 @@ app.use(
         const shop = await getShopByShopifyDomain(shopifyDomain);
         await Promise.all([
           afterInstall(ctx),
-          registerWebhook({shopifyDomain, accessToken: shop.accessToken})
+          registerWebhook({shopifyDomain, accessToken: shop.accessToken}),
+          registerScriptTag({shopifyDomain, accessToken: shop.accessToken})
         ]);
       } catch (e) {
         console.error(`Failed to handle after install:`, e);

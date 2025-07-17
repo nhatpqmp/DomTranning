@@ -1,5 +1,5 @@
 (function() {
-  const BASE_URL = 'https://friend-saver-jpg-refinance.trycloudflare.com/scripttag';
+  const BASE_URL = 'https://fitted-choices-pixels-distributors.trycloudflare.com/scripttag';
 
   const scriptElement = document.createElement('script');
   scriptElement.type = 'text/javascript';

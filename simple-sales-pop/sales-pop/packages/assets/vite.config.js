@@ -77,6 +77,10 @@ if (!isProduction && shopifyApiKey) {
     updateEnvFile('.env.development', {
       VITE_SHOPIFY_API_KEY: shopifyApiKey
     });
+
+    updateEnvFile('../scriptag/.env.development', {
+      VITE_BASE_URL: baseUrl
+    });
   } catch (e) {
     console.error('Error changing the env file');
   }
@@ -123,7 +127,8 @@ const proxyConfig = {
   '^/auth(/|(\\?.*)?$)': proxyOptions,
   '^/apiSa(/|(\\?.*)?$)': proxyOptions,
   '^/scripttag(/|(\\?.*)?$)': proxyOptions,
-  '^/webhook(/|(\\?.*)?$)': proxyOptions
+  '^/webhook(/|(\\?.*)?$)': proxyOptions,
+  '^/clientApi(/|(\\?.*)?$)': proxyOptions
 };
 
 /** @type {ServerOptions} */
@@ -155,6 +160,7 @@ export default defineConfig({
       {
         IS_EMBEDDED_APP: true,
         SHOPIFY_API_KEY: null,
+        BASE_URL: null,
         HOST: host,
         FRONTEND_PORT: fePort,
         BACKEND_PORT: bePort,

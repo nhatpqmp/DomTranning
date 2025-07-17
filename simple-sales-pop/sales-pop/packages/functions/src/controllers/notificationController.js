@@ -1,9 +1,13 @@
 import {getCurrentShop, getCurrentShopData} from '@functions/helpers/auth';
-import {getNotifications} from '@functions/repositories/notificationRepository';
+import {
+  getNotificationByDomain,
+  getNotifications
+} from '@functions/repositories/notificationRepository';
 import {initShopify} from '@functions/services/shopifyService';
 import {registerWebhook} from '@functions/services/webhookService';
 import {afterInstall as affterInstallService} from '@functions/services/affterInstallService';
-import {getNotificationByDomain} from '@functions/controllers/clientApi/notificationController';
+import {list} from '@functions/controllers/clientApi/notificationController';
+import {getSetting} from '@functions/repositories/settingRepository';
 
 /**
  * @param {Context|Object|*} ctx
@@ -27,7 +31,9 @@ export async function getList(ctx) {
 export async function afterInstall(ctx) {
   try {
     const shopData = getCurrentShopData(ctx);
-    // const shopify = await initShopify(shopData);
+    const shopify = await initShopify(shopData);
+    console.log('Domain:', shopData.shopifyDomain);
+    console.log('shopify:', shopify.options.accessToken);
     //
     // const data = await registerWebhook({
     //   shopifyDomain: shopData.shopifyDomain,
@@ -39,10 +45,14 @@ export async function afterInstall(ctx) {
     // });
     // await affterInstallService(ctx);
 
-    const data = await getNotificationByDomain(shopData.shopifyDomain);
-    console.log(data);
+    const [notifications, setting] = await Promise.all([
+      getNotificationByDomain(shopData.id),
+      getSetting(shopData.id)
+    ]);
+
     return (ctx.body = {
-      data: [data],
+      notifications,
+      setting,
       success: true
     });
   } catch (e) {
