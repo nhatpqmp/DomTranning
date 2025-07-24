@@ -1,5 +1,5 @@
 import {getCurrentShop} from '@functions/helpers/auth';
-import {getSetting, updateSetting} from '@functions/repositories/settingRepository';
+import {getSettings, updateSetting} from '@functions/repositories/settingRepository';
 
 /**
  *
@@ -10,9 +10,9 @@ export async function getOne(ctx) {
   try {
     const shopID = getCurrentShop(ctx);
     console.log(shopID);
-    const setting = await getSetting(shopID);
+    const settings = await getSettings(shopID);
     return (ctx.body = {
-      data: setting,
+      data: settings,
       success: true
     });
   } catch (e) {

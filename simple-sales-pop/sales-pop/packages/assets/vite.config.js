@@ -78,7 +78,7 @@ if (!isProduction && shopifyApiKey) {
       VITE_SHOPIFY_API_KEY: shopifyApiKey
     });
 
-    updateEnvFile('../scriptag/.env.development', {
+    updateEnvFile('../scripttag/.env.development', {
       VITE_BASE_URL: baseUrl
     });
   } catch (e) {

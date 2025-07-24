@@ -69,6 +69,7 @@ export default function usePaginate({
     nextPage: () => onPaginate('next'),
     onQueryChange,
     onQueriesChange,
+    queries,
     ...fetchApiHook
   };
 }

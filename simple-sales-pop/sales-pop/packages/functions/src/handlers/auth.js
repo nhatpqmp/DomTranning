@@ -1,6 +1,6 @@
 import App from 'koa';
 import 'isomorphic-fetch';
-import {contentSecurityPolicy, getShopByShopifyDomain, shopifyAuth} from '@avada/core';
+import {contentSecurityPolicy, shopifyAuth} from '@avada/core';
 import shopifyConfig from '@functions/config/shopify';
 import render from 'koa-ejs';
 import path from 'path';
@@ -8,11 +8,13 @@ import createErrorHandler from '@functions/middleware/errorHandler';
 import firebase from 'firebase-admin';
 import appConfig from '@functions/config/app';
 import shopifyOptionalScopes from '@functions/config/shopifyOptionalScopes';
-import {afterInstall} from '@functions/services/affterInstallService';
-import {createWebhooks, registerWebhook} from '@functions/services/webhookService';
-import shopify from '@functions/config/shopify';
-import {initShopify} from '../../lib/services/shopifyService';
-import {registerScriptTag} from "@functions/services/scriptTagService";
+import {
+  syncOrders,
+  registerWebhook,
+  addDefaultSetting,
+  registerScriptTag
+} from '@functions/services/affterInstallService';
+import {getCurrentShopData} from '@functions/helpers/auth';
 
 if (firebase.apps.length === 0) {
   firebase.initializeApp();
@@ -59,11 +61,12 @@ app.use(
     afterInstall: async ctx => {
       try {
         const shopifyDomain = ctx.state.shopify.shop;
-        const shop = await getShopByShopifyDomain(shopifyDomain);
+        const shopData = getCurrentShopData(ctx);
         await Promise.all([
-          afterInstall(ctx),
-          registerWebhook({shopifyDomain, accessToken: shop.accessToken}),
-          registerScriptTag({shopifyDomain, accessToken: shop.accessToken})
+          syncOrders(shopData),
+          addDefaultSetting(shopData),
+          registerWebhook({shopifyDomain, accessToken: shopData.accessToken})
+          // registerScriptTag({shopifyDomain, accessToken: shopData.accessToken})
         ]);
       } catch (e) {
         console.error(`Failed to handle after install:`, e);

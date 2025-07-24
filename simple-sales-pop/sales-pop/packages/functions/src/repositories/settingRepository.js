@@ -10,7 +10,7 @@ const collection = firestore.collection('settings');
  * @param shopId
  * @returns {Promise<{[p: string]: FirebaseFirestore.DocumentFieldValue, id: string}|*[]>}
  */
-export async function getSetting(shopId) {
+export async function getSettings(shopId) {
   try {
     const docSnap = await collection
       .where('shopId', '==', shopId)

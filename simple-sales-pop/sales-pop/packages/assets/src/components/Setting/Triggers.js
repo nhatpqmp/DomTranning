@@ -1,7 +1,6 @@
-import {FormLayout, Select, TextField, Text} from '@shopify/polaris';
-import {value} from 'firebase-tools/lib/deploymentTool';
+import {FormLayout, Select, TextField} from '@shopify/polaris';
 
-function Triggers({setting, onChangeSetting}) {
+function Triggers({settings, onChangeSetting}) {
   const options = [
     {label: 'All pages', value: 'all'},
     {label: 'Specific pages', value: 'specific'}
@@ -13,33 +12,25 @@ function Triggers({setting, onChangeSetting}) {
         label="Date range"
         options={options}
         onChange={value => onChangeSetting('allowShow', value)}
-        value={setting.allowShow}
+        value={settings.allowShow}
       />
       <FormLayout>
         <TextField
           label="Include pages"
-          value={setting.includedUrls}
+          value={settings.includedUrls}
           onChange={value => onChangeSetting('includedUrls', value)}
           multiline={4}
           autoComplete="off"
-          helpText={
-            <Text variant="bodySm" tone="subdued">
-              Page Url two show the pop-up (separated by new lines)
-            </Text>
-          }
+          helpText={'Page Url two show the pop-up (separated by new lines)'}
         />
-        {setting.allowShow === 'specific' && (
+        {settings.allowShow === 'specific' && (
           <TextField
             label="Excluded pages"
-            value={setting.excludedUrls}
+            value={settings.excludedUrls}
             onChange={value => onChangeSetting('excludedUrls', value)}
             multiline={4}
             autoComplete="off"
-            helpText={
-              <Text variant="bodySm" tone="subdued">
-                Page URLs NOT to show the pop-up (separated by new lines)
-              </Text>
-            }
+            helpText={'Page URLs NOT to show the pop-up (separated by new lines)'}
           />
         )}
       </FormLayout>

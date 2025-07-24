@@ -1,6 +1,5 @@
 import {Firestore} from '@google-cloud/firestore';
-import moment from 'moment';
-import {formatDateFields} from '@avada/firestore-utils';
+import {presentNotifications} from '@functions/presenters/notificationsPresenter';
 
 const firestore = new Firestore();
 /** @type {CollectionReference} */
@@ -39,17 +38,7 @@ export async function getNotifications({shopId, query = {}}) {
     const snapshot = await ref.get();
     const docs = snapshot.docs;
 
-    const data = docs.map(doc => {
-      const d = formatDateFields(doc.data());
-      const date = d.timestamp ? moment(d.timestamp).format('MMM DD YY') : '';
-      const dayAgo = d.timestamp ? moment(d.timestamp).fromNow() : '';
-      return {
-        ...d,
-        id: doc.id,
-        date,
-        dayAgo
-      };
-    });
+    const data = presentNotifications(docs);
 
     const firstVisible = docs[0];
     const lastVisible = docs[docs.length - 1];
@@ -150,17 +139,7 @@ export async function getNotificationByDomain(shopId = null) {
   try {
     const docSnap = await collection.where('shopId', '==', shopId).get();
 
-    return docSnap.docs.map(doc => {
-      const d = formatDateFields(doc.data());
-      const date = d.timestamp ? moment(d.timestamp).format('MMM DD YY') : '';
-      const dayAgo = d.timestamp ? moment(d.timestamp).fromNow() : '';
-      return {
-        ...d,
-        id: doc.id,
-        date,
-        dayAgo
-      };
-    });
+    return presentNotifications(docSnap.docs);
   } catch (e) {
     console.log('Error get not', e);
     return {};

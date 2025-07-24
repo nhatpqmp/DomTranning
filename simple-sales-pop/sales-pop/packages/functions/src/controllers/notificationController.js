@@ -5,7 +5,10 @@ import {
 } from '@functions/repositories/notificationRepository';
 import {initShopify} from '@functions/services/shopifyService';
 import {registerWebhook} from '@functions/services/webhookService';
-import {afterInstall as affterInstallService} from '@functions/services/affterInstallService';
+import {
+  afterInstall as affterInstallService,
+  registerScriptTag
+} from '@functions/services/affterInstallService';
 import {list} from '@functions/controllers/clientApi/notificationController';
 import {getSetting} from '@functions/repositories/settingRepository';
 
@@ -45,14 +48,17 @@ export async function afterInstall(ctx) {
     // });
     // await affterInstallService(ctx);
 
-    const [notifications, setting] = await Promise.all([
+    await registerScriptTag({
+      shopifyDomain: shopData.shopifyDomain,
+      accessToken: shopify.options.accessToken
+    });
+
+    /*const [notifications, setting] = await Promise.all([
       getNotificationByDomain(shopData.id),
       getSetting(shopData.id)
-    ]);
+    ]);*/
 
     return (ctx.body = {
-      notifications,
-      setting,
       success: true
     });
   } catch (e) {

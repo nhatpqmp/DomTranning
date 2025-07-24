@@ -1,5 +1,6 @@
 (function() {
-  const BASE_URL = 'https://fitted-choices-pixels-distributors.trycloudflare.com/scripttag';
+  console.log('This is the');
+  const BASE_URL = 'https://counseling-charter-flying-lie.trycloudflare.com/scripttag';
 
   const scriptElement = document.createElement('script');
   scriptElement.type = 'text/javascript';

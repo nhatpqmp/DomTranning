@@ -1,12 +1,8 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {BlockStack, Text, InlineGrid, Box} from '@shopify/polaris';
+import defaultPositions from '@assets/const/defaultPositions';
 
-const positions = [
-  {value: 'bottom-left', label: 'Bottom Left'},
-  {value: 'bottom-right', label: 'Bottom Right'},
-  {value: 'top-left', label: 'Top Left'},
-  {value: 'top-right', label: 'Top Right'}
-];
+const positions = defaultPositions;
 
 function getPopupPositionStyle(value, isSelected) {
   const base = {

@@ -1,62 +1,55 @@
-import React, {useState, useCallback, useEffect} from 'react';
-import {Page, Layout, ResourceList, Card} from '@shopify/polaris';
+import React, {useState} from 'react';
+import {
+  Page,
+  Layout,
+  ResourceList,
+  Card,
+  SkeletonPage,
+  SkeletonDisplayText,
+  SkeletonBodyText,
+  SkeletonTabs
+} from '@shopify/polaris';
 import Notification from '@assets/components/Notification/Notification';
-import useFetchApi from '@assets/hooks/api/useFetchApi';
 import {api} from '@assets/helpers';
+import usePaginate from '@assets/hooks/api/usePaginate';
 
 export default function Notifications() {
   const [selectedItems, setSelectedItems] = useState([]);
-  const [sortValue, setSortValue] = useState('desc');
-  const [cursor, setCursor] = useState({after: null, before: null});
-  const [hasNext, setHasNext] = useState(true);
-
-  const {data: items, fetchApi, loading, pageInfo} = useFetchApi({
+  const {data: items, loading, pageInfo, nextPage, prevPage, onQueryChange, queries} = usePaginate({
     url: '/notifications',
     defaultData: [],
-    initLoad: false
+    initLoad: true,
+    defaultSort: 'desc',
+    defaultLimit: 10
   });
 
-  useEffect(() => {
-    const params = {sort: sortValue};
-    if (cursor.after) params.after = cursor.after;
-    if (cursor.before) params.before = cursor.before;
-    fetchApi('/notifications', params);
-  }, [sortValue, cursor]);
-
-  useEffect(() => {
-    setHasNext(pageInfo?.hasNext ?? false);
-  }, [pageInfo]);
-
-  const handleSortChange = useCallback(value => {
-    setSortValue(value);
-    setCursor({after: null, before: null});
+  const handleSortChange = value => {
+    onQueryChange('sort', value, true);
     setSelectedItems([]);
-  }, []);
-
-  const handlePagination = useCallback(() => {
-    if (!pageInfo?.endCursor) return;
-    setCursor(pageInfo.endCursor);
-    setSelectedItems([]);
-    fetchApi('/notifications', {
-      sort: sortValue,
-      after: pageInfo.endCursor
-    });
-  }, [fetchApi, pageInfo?.endCursor, sortValue]);
-
-  const handlePreviousPagination = useCallback(() => {
-    if (!pageInfo?.startCursor) return;
-    setCursor(pageInfo.startCursor);
-    setSelectedItems([]);
-    fetchApi('/notifications', {
-      sort: sortValue,
-      before: pageInfo.startCursor
-    });
-  }, [fetchApi, pageInfo?.startCursor, sortValue]);
+  };
 
   const resourceName = {
     singular: 'notification',
     plural: 'notifications'
   };
+
+  if (loading) {
+    return (
+      <SkeletonPage title="Notifications" primaryAction>
+        <Layout>
+          <Layout.Section>
+            <Card>
+              <SkeletonTabs count={2} />
+              <Card>
+                <SkeletonDisplayText size="small" />
+                <SkeletonBodyText lines={6} />
+              </Card>
+            </Card>
+          </Layout.Section>
+        </Layout>
+      </SkeletonPage>
+    );
+  }
 
   return (
     <Page
@@ -68,16 +61,14 @@ export default function Notifications() {
           try {
             const res = await api(
               '/notifications/sync?shopifyDomain=sales-pop-store-final.myshopify.com',
-              {
-                method: 'POST'
-              }
+              {method: 'POST'}
             );
 
             if (res.success) {
-              console.log('res:', res);
-              //console.log('Success register webhook:', res.data);
-            } else {
-              console.error('Error:', res.error);
+              console.log('Success');
+            }
+            if (res.error) {
+              console.error('Error');
             }
           } catch (err) {
             console.error('API call failed:', err);
@@ -97,12 +88,12 @@ export default function Notifications() {
               onSelectionChange={setSelectedItems}
               selectable
               pagination={{
-                hasNext,
-                onNext: handlePagination,
-                hasPrevious: pageInfo?.hasPre,
-                onPrevious: handlePreviousPagination
+                hasNext: pageInfo?.hasNext ?? false,
+                onNext: nextPage,
+                hasPrevious: pageInfo?.hasPre ?? false,
+                onPrevious: prevPage
               }}
-              sortValue={sortValue}
+              sortValue={queries.sort ? queries.sort : 'desc'}
               sortOptions={[
                 {label: 'Newest update', value: 'desc'},
                 {label: 'Oldest update', value: 'asc'}

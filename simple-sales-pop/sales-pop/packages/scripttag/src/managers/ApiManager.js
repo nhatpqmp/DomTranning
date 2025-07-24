@@ -10,11 +10,11 @@ export default class ApiManager {
     const baseUrl = process.env.VITE_BASE_URL;
 
     const {notifications, settings} = await makeRequest(
-      `https://${baseUrl}/clientApi/notifications?shopifyDomain=${shopifyDomain}`,
+      `${baseUrl}/clientApi/notifications?shopifyDomain=${shopifyDomain}`,
       `GET`
     );
 
-    console.log('notifications', notifications);
+    console.log('settting:', settings);
 
     return {notifications, settings};
   };
