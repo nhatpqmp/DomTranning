@@ -1,5 +1,5 @@
 import {createSetting, getSettings} from '@functions/repositories/settingRepository';
-import defaultSetting from '@functions/install/defaultSetting';
+import defaultSetting from '@functions/const/defaultSetting';
 import {initShopify} from '@functions/services/shopifyService';
 import {loadGraphQL} from '@functions/helpers/graphql/graphqlHelpers';
 import {addNotifications} from '@functions/repositories/notificationRepository';
@@ -7,6 +7,9 @@ import appConfig from '../config/app';
 import Shopify from 'shopify-api-node';
 import {isEmpty} from '@avada/utils';
 
+/**
+ *
+ */
 export async function addDefaultSetting() {
   try {
     const currentSetting = await getSettings();
@@ -30,18 +33,21 @@ export async function syncOrders(shopData) {
     const shopify = initShopify(shopData);
     const shopQuery = loadGraphQL('/order.graphql');
     const orderData = await shopify.graphql(shopQuery, {
-      limit: 30
+      first: 30,
+      sortKey: 'CREATED_AT',
+      reverse: true
     });
 
-    const notifications = orderData.orders.edges.map(async edge => {
+    console.log('orderData', orderData);
+
+    const notifications = orderData.orders.edges.map(edge => {
       const order = edge.node;
       const address = order.shippingAddress || {};
       const lineItem = order.lineItems?.edges?.[0]?.node || {};
       const product = lineItem.product || {};
       const image = product.images?.edges?.[0]?.node || {};
 
-      const productIdStr = await handleProductId(product.id);
-      const productId = productIdStr ? parseInt(productIdStr, 10) : null;
+      const productId = handleProductId(product.id);
 
       return {
         firstName: address.firstName || '',
@@ -50,13 +56,15 @@ export async function syncOrders(shopData) {
         productName: lineItem.title,
         productId,
         productImage: image.originalSrc,
-        timestamp: order.createdAt
+        timestamp: new Date(order.createdAt)
       };
     });
 
+    console.log('notifications', notifications);
+
     await addNotifications({shopId: shopData.id, notifications});
   } catch (e) {
-    console.error(e);
+    console.error('Failed to sync orders', e);
   }
 }
 
@@ -65,7 +73,7 @@ export async function syncOrders(shopData) {
  * @param productId
  * @returns {Promise<number|null>}
  */
-export async function handleProductId(productId) {
+export function handleProductId(productId) {
   try {
     const productIdStr = productId?.split('/').pop();
     return productIdStr ? parseInt(productIdStr, 10) : null;

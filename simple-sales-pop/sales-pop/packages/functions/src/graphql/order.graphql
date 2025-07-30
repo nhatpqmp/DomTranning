@@ -1,5 +1,5 @@
-{
-  orders(first: 30, sortKey: CREATED_AT, reverse: true) {
+query OrdersQuery($first: Int = 30, $sortKey: OrderSortKeys = CREATED_AT, $reverse: Boolean = false) {
+   orders(first: $first, sortKey: $sortKey, reverse: $reverse) {
     edges {
       node {
         createdAt

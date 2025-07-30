@@ -29,6 +29,7 @@ export async function listenNewOrder(ctx) {
 }
 
 /**
+ * todo: move to shopify service
  * @param shopify
  * @param orderData
  * @returns {Promise<{firstName, city, country, productName, productId, productImage, timestamp}>}

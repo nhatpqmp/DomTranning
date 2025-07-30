@@ -60,12 +60,17 @@ export default class DisplayManager {
     }
   }
 
+  prepareNotifications() {
+    const {maxPopsDisplay} = this.settings;
+    return this.notifications.slice(0, maxPopsDisplay);
+  }
+
   async startDisplayLoop() {
     const {firstDelay, displayDuration, popsInterval, maxPopsDisplay} = this.settings;
     if (!this.notifications.length) return;
     await this.delay(firstDelay * 1000);
 
-    const notifications = this.notifications.slice(0, maxPopsDisplay);
+    const notifications = this.prepareNotifications();
 
     for (const notification of notifications) {
       const processedNotification = {

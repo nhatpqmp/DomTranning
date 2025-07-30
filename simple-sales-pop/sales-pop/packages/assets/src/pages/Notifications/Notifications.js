@@ -59,10 +59,7 @@ export default function Notifications() {
         content: 'Test Install',
         onAction: async () => {
           try {
-            const res = await api(
-              '/notifications/sync?shopifyDomain=sales-pop-store-final.myshopify.com',
-              {method: 'POST'}
-            );
+            const res = await api('/notifications/sync', {method: 'POST'});
 
             if (res.success) {
               console.log('Success');

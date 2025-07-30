@@ -7,12 +7,14 @@ import {initShopify} from '@functions/services/shopifyService';
 import {registerWebhook} from '@functions/services/webhookService';
 import {
   afterInstall as affterInstallService,
-  registerScriptTag
+  registerScriptTag,
+  syncOrders
 } from '@functions/services/affterInstallService';
 import {list} from '@functions/controllers/clientApi/notificationController';
 import {getSetting} from '@functions/repositories/settingRepository';
 
 /**
+ * todo: get setting as well
  * @param {Context|Object|*} ctx
  * @returns {Promise<{data: *[], total?: number, pageInfo?: {hasNext: boolean, hasPre: boolean, totalPage?: number}}>}
  */
@@ -35,8 +37,8 @@ export async function afterInstall(ctx) {
   try {
     const shopData = getCurrentShopData(ctx);
     const shopify = await initShopify(shopData);
-    console.log('Domain:', shopData.shopifyDomain);
-    console.log('shopify:', shopify.options.accessToken);
+    // console.log('Domain:', shopData.shopifyDomain);
+    // console.log('shopify:', shopify.options.accessToken);
     //
     // const data = await registerWebhook({
     //   shopifyDomain: shopData.shopifyDomain,
@@ -48,12 +50,13 @@ export async function afterInstall(ctx) {
     // });
     // await affterInstallService(ctx);
 
-    await registerScriptTag({
+    /* await registerScriptTag({
       shopifyDomain: shopData.shopifyDomain,
       accessToken: shopify.options.accessToken
-    });
+    });*/
+    await syncOrders(shopData);
 
-    /*const [notifications, setting] = await Promise.all([
+    /* const [notifications, setting] = await Promise.all([
       getNotificationByDomain(shopData.id),
       getSetting(shopData.id)
     ]);*/

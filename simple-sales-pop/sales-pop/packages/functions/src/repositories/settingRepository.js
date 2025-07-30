@@ -1,5 +1,4 @@
 import {Firestore} from '@google-cloud/firestore';
-import defaultSetting from '@functions/install/defaultSetting';
 
 const firestore = new Firestore();
 /** @type {CollectionReference} */
@@ -26,7 +25,7 @@ export async function getSettings(shopId) {
     return {id: doc.id, ...doc.data()};
   } catch (e) {
     console.log('Error get setting', e);
-    return defaultSetting;
+    return [];
   }
 }
 

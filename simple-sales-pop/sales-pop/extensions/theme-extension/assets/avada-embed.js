@@ -1,6 +1,6 @@
 (function() {
   console.log('This is the');
-  const BASE_URL = 'https://counseling-charter-flying-lie.trycloudflare.com/scripttag';
+  const BASE_URL = 'https://master-stations-feb-removable.trycloudflare.com/scripttag';
 
   const scriptElement = document.createElement('script');
   scriptElement.type = 'text/javascript';
